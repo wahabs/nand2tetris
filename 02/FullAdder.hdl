@@ -25,11 +25,16 @@ CHIP FullAdder {
         carry;   // Left bit of a + b + c
 
     PARTS:
-      HalfAdder(a=b, b=c, sum=bc_sum, carry=bc_carry);
-      Xor(a=b, b=c, out=xor_bc);
-      Not(in=xor_bc, out=not_xor_bc);
-      Or(a=b, b=c, out=or_bc);
-      Mux16(a[0]=bc_sum, a[1]=bc_carry, b[0]=not_xor_bc, b[1]=or_bc, sel=a, out[0]=sum, out[1]=carry);
+      Xor(a=b, b=c, out=xorbc);
+      And(a=b, b=c, out=andbc);
+      Not(in=xorbc, out=notxorbc);
+      Or(a=b, b=c, out=orbc);
+      Mux16(a[0]=xorbc, a[1]=andbc, b[0]=notxorbc, b[1]=orbc, sel=a, out[0]=sum, out[1]=carry);
+
+      // Alternative with 2 adders. This works because the second adder gets the sum from the first. Then if either adder had a carry, we know the full adder has a carry
+      /* HalfAdder(a=a, b=b, sum=sumab, carry=carryab);
+      HalfAdder(a=sumab, b=c, sum=sum, carry=carrycsumab);
+      Or(a=carryab, b=carrycsumab, out=carry); */
 }
 
 
