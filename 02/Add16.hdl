@@ -4,7 +4,8 @@
 // File name: projects/02/Adder16.hdl
 
 /**
- * Adds two 16-bit values.
+ * Adds two 16-bit values. Can be composed of 16 adders
+ * The carry is piped from right to left
  * The most significant carry bit is ignored.
  */
 

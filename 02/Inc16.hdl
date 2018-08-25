@@ -8,6 +8,8 @@
  * out = in + 1 (arithmetic addition)
  */
 
+ // NB: you can represent an arbitrary-length string of 0's or 1's with `false` or `true` respectively
+
 CHIP Inc16 {
     IN in[16];
     OUT out[16];

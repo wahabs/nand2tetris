@@ -7,11 +7,48 @@
  * Computes the sum of three bits.
  */
 
+ /*
+  a b c | carry sum
+  0 0 0 | 0     0
+  0 0 1 | 0     1
+  0 1 0 | 0     1
+  0 1 1 | 1     0
+  1 0 0 | 0     1
+  1 0 1 | 1     0
+  1 1 0 | 1     0
+  1 1 1 | 1     1
+ */
+
 CHIP FullAdder {
     IN a, b, c;  // 1-bit inputs
     OUT sum,     // Right bit of a + b + c
         carry;   // Left bit of a + b + c
 
     PARTS:
-    // Put you code here:
+      HalfAdder(a=b, b=c, sum=bc_sum, carry=bc_carry);
+      Xor(a=b, b=c, out=xor_bc);
+      Not(in=xor_bc, out=not_xor_bc);
+      Or(a=b, b=c, out=or_bc);
+      Mux16(a[0]=bc_sum, a[1]=bc_carry, b[0]=not_xor_bc, b[1]=or_bc, sel=a, out[0]=sum, out[1]=carry);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
