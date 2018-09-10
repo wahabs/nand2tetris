@@ -11,10 +11,47 @@
  * else                    out[t+1] = out[t]
  */
 
+ /*
+  reset load inc
+  000             out[t] = out[t-1]
+  001             out[t] = out[t-1] + 1
+  010             out[t] = in[t-1]
+  011             out[t] = in[t-1]
+  100             out[t] = 0
+  101             out[t] = 0
+  110             out[t] = 0
+  111             out[t] = 0
+  */
+
 CHIP PC {
     IN in[16],load,inc,reset;
     OUT out[16];
 
     PARTS:
-    // Put your code here:
+    Inc16(in=regout, out=incremented);
+
+    Mux16(a=regout, b=incremented, sel=inc, out=applyinc);
+    Mux16(a=applyinc, b=in, sel=load, out=applyload);
+    Mux16(a=applyload, b=false, sel=reset, out=applyreset);
+
+    Register(in=applyreset, load=true, out=out, out=regout);
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+//
